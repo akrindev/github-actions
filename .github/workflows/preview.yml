@@ -1,0 +1,19 @@
+name: Github Action preview
+on: [push]
+jobs:
+  Initial-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: install dependecies
+        run: composer install
+      - name: generate key
+        run: php artisan key:generate
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm build
