@@ -6,16 +6,21 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
       - name: install dependecies
         run: composer install
+
       - name: generate key
         run: php artisan key:generate
+
       - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - uses: pnpm/action-setup@v2
         name: Install pnpm
         id: pnpm-install
@@ -39,5 +44,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
       - name: build
         run: pnpm build
